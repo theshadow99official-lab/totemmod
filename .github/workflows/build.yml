@@ -1,9 +1,9 @@
-name: Build Totem Mod
+name: Build and Release TotemMod
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    tags:
+      - 'v*'  # Triggers only when you push a version tag like v1.0.0
 
 jobs:
   build:
@@ -14,19 +14,21 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Set up JDK 21
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v3
       with:
+        distribution: 'temurin'
         java-version: 21
-        distribution: temurin
 
-    - name: Grant execute permission to gradlew
+    - name: Make Gradle wrapper executable
       run: chmod +x ./gradlew
 
-    - name: Build with Gradle
+    - name: Build mod
       run: ./gradlew build
 
-    - name: Upload Mod JAR
-      uses: actions/upload-artifact@v4
+    - name: Upload jar to GitHub Release
+      uses: softprops/action-gh-release@v1
       with:
-        name: TotemMod
-        path: build/libs/*.jar
+        files: build/libs/*.jar
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
