@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "totemmod",
+  "version": "1.0.0",
+  "name": "Totem Key Mod",
+  "description": "Press a key to move a totem to offhand",
+  "authors": ["You"],
+  "contact": {},
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "client": ["com.example.totemmod.TotemKeyMod"]
+  },
+  "depends": {
+    "fabricloader": ">=0.15.9",
+    "fabric": "*",
+    "minecraft": "1.21.5"
+  }
+}
